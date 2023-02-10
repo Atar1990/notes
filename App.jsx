@@ -7,6 +7,7 @@ import Note from './Note';
 import NewCategory from './NewCategory'
 import { createId } from './helper'
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+import { Appbar } from 'react-native-paper';
 // import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 const theme = {
@@ -19,6 +20,7 @@ const theme = {
 };
 
 const defState = {
+  history: [],
   currentPage: 'home',
   currentCategory: {},
   currentNote: {},
@@ -76,11 +78,13 @@ export default function App() {
     const category = newCategories.find(c => c.id === state.currentCategory);
     const note = category.notes.find(n => n.id === state.currentNote);
     note.text = text;
-    setState({
+    const newState = {
       ...state,
       currentPage: 'category',
       categories: newCategories
-    })
+    };
+    newState.history.push('notes')
+    setState(newState)
   }
 
   const addCategory = (text) => {
@@ -90,26 +94,23 @@ export default function App() {
       notes: []
     };
     const newCategories = [...state.categories, newCategory];
-    setState({
+    const newState = {
       ...state,
       categories: newCategories,
       currentPage: 'home'
-    })
+    }
+    newState.history.pop();
+    setState(newState)
   }
 
   const clickCategory = category => {
-    setState({
+    const newState = {
       ...state,
       currentPage: 'category',
       currentCategory: category.id
-    })
-  }
-
-  const backClick = () => {
-    setState({
-      ...state,
-      currentPage: "home"
-    })
+    };
+    newState.history.push('home')
+    setState(newState)
   }
 
   const newNote = () => {
@@ -126,11 +127,13 @@ export default function App() {
   }
 
   const clickOnNote = note => {
-    setState({
+    const newState = {
       ...state,
       currentPage: 'note',
       currentNote: note.id
-    })
+    }
+    newState.history.push('category')
+    setState(newState)
   }
 
   const getCurrentCategory = () => {
@@ -142,31 +145,52 @@ export default function App() {
     const category = newCategories.find(c => c.id === state.currentCategory);
     const index = category.notes.findIndex(n => n.id === state.currentNote);
     category.notes.splice(index, 1);
-    setState({
+    const newState = {
       ...state,
       currentPage: 'category',
       categories: newCategories
+    };
+    newState.history.pop();
+    setState(newState)
+  }
+
+  const backToLastPage = () => {
+    setState({
+      ...state,
+      currentPage: state.history.pop()
     })
+  }
+
+  const addCategoryPage = () => {
+    const newState = {
+      ...state,
+      currentPage: 'newCategory'
+    };
+    newState.history.push('home')
+    setState(newState)
+  }
+
+  const getLastPageTitle = () => {
+    const title = state.history[state.history.length - 1];
+    return title && (title[0].toUpperCase() + title.slice(1))
   }
 
   return (
     <PaperProvider theme={theme}>
+      <Appbar.Header>
+        {state.currentPage !== 'home' && <Appbar.BackAction onPress={() => { backToLastPage() }} />}
+        <Appbar.Content title={getLastPageTitle()} />
+      </Appbar.Header>
       <ScrollView contentContainerStyle={styles.container}>
         {state.currentPage === 'home' && (
           <Home
             categories={state.categories}
-            addCategory={() => {
-              setState({
-                ...state,
-                currentPage: 'newCategory'
-              })
-            }}
+            addCategory={() => { addCategoryPage() }}
             clickOnCategory={(category) => { clickCategory(category) }}></Home>
         )}
         {state.currentPage === 'category' && (
           <Category
             category={getCurrentCategory()}
-            backClick={() => { backClick() }}
             createNewNote={() => { newNote() }}
             clickOnNote={(note) => { clickOnNote(note) }}></Category>
         )}

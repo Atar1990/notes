@@ -1,4 +1,5 @@
-import { StyleSheet, View, Button, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function Category(props) {
     return (
@@ -14,12 +15,9 @@ export default function Category(props) {
                 ))
             }
             <View style={styles.footer}>
-                <Button title="add" onPress={() => {
+                <Button icon="card-plus-outline" mode="contained" onPress={() => {
                     props.createNewNote();
-                }}></Button>
-                <Button title="back" onPress={() => {
-                    props.backClick();
-                }}></Button>
+                }}>Add</Button>
             </View>
         </View>
     );

@@ -20,7 +20,7 @@ export default function Home(props) {
                 </TouchableOpacity>
             )
             )}
-            <Button icon="camera" mode="contained" onPress={() => {
+            <Button icon="card-plus-outline" mode="contained" onPress={() => {
                 props.addCategory()
             }}>Add</Button>
         </View>

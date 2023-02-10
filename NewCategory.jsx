@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, TextInput, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function NewCategory(props) {
 
@@ -16,11 +17,11 @@ export default function NewCategory(props) {
                     placeholder="Category name"
                 />
             </SafeAreaView>
-            <Button title="save" onPress={() => {
+            <Button icon="content-save" mode="contained" onPress={() => {
                 if (text) {
                     props.categoryName(text)
                 }
-            }}></Button>
+            }}>save</Button>
         </View>
     );
 }

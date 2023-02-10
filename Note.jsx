@@ -1,5 +1,6 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, TextInput, View, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { Button } from 'react-native-paper';
 
 export default function Note(props) {
 
@@ -18,14 +19,14 @@ export default function Note(props) {
                 />
             </SafeAreaView>
             <View style={styles.footer}>
-                <Button title="save" onPress={() => {
+                <Button icon="content-save" mode="contained" onPress={() => {
                     if (text) {
                         props.saveNote(text)
                     }
-                }}></Button>
-                <Button color="red" title="delete" onPress={() => {
+                }}>Save</Button>
+                <Button icon="delete-outline" mode="outlined" onPress={() => {
                     props.deleteNote()
-                }}></Button>
+                }}>Delete</Button>
             </View>
         </View>
     );
