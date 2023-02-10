@@ -72,7 +72,6 @@ export default function App() {
       currentPage: 'category',
       categories: newCategories
     })
-    storeData();
   }
 
   const addCategory = (text) => {
@@ -87,7 +86,6 @@ export default function App() {
       categories: newCategories,
       currentPage: 'home'
     })
-    storeData();
   }
 
   const clickCategory = category => {
@@ -116,7 +114,6 @@ export default function App() {
       ...state,
       categories: newCategories
     })
-    storeData();
   }
 
   const clickOnNote = note => {
@@ -141,7 +138,6 @@ export default function App() {
       currentPage: 'category',
       categories: newCategories
     })
-    storeData();
   }
 
   return (
