@@ -7,26 +7,45 @@ export default function Note(props) {
 
 
     return (
-        <View>
+        <View style={styles.container}>
             <SafeAreaView>
                 <TextInput
+                    multiline={true}
+                    numberOfLines={10}
                     style={styles.input}
                     onChangeText={onChangeText}
                     value={text}
                 />
             </SafeAreaView>
-            <Button title="save" onPress={() => {
-                props.saveNote(text)
-            }}></Button>
+            <View style={styles.footer}>
+                <Button title="save" onPress={() => {
+                    if (text) {
+                        props.saveNote(text)
+                    }
+                }}></Button>
+                <Button color="red" title="delete" onPress={() => {
+                    props.deleteNote()
+                }}></Button>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     input: {
-        height: 40,
-        margin: 12,
+        height: 250,
+        marginVertical: 20,
         borderWidth: 1,
-        padding: 10,
+        padding: 30,
+        textAlignVertical: 'top'
     },
+    container: {
+        width: '80%',
+        marginTop: 20
+    },
+    footer: {
+        display: 'flex',
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between'
+    }
 });

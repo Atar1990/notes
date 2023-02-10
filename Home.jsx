@@ -1,4 +1,4 @@
-import { StyleSheet, Button, View } from 'react-native';
+import { TouchableOpacity, Text, Button, View, StyleSheet } from 'react-native';
 
 export default function Home(props) {
 
@@ -7,11 +7,16 @@ export default function Home(props) {
     }
 
     return (
-        <View>
+        <View style={styles.container}>
+            <Text style={styles.header}>Notes</Text>
             {props.categories.map((category, index) => (
-                <Button key={index.toString()} title={getCategoryName(category)} onPress={() => {
+                <TouchableOpacity key={index.toString()} style={styles.category} onPress={() => {
                     props.clickOnCategory(category)
-                }}></Button>)
+                }
+                }>
+                    <Text style={styles.text}>{getCategoryName(category)}</Text>
+                </TouchableOpacity>
+            )
             )}
             <Button title="add" onPress={() => {
                 props.addCategory()
@@ -19,3 +24,19 @@ export default function Home(props) {
         </View>
     );
 }
+
+
+const styles = StyleSheet.create({
+    text: {
+        fontSize: 25,
+        fontWeight: '700'
+    },
+    category: { backgroundColor: "#f5f5f5", padding: 20, marginBottom: 20 },
+    container: { width: '80%', marginTop: 50 },
+    header: {
+        fontSize: 50,
+        fontWeight: '700',
+        color: '#555f6f',
+        marginBottom: 20
+    }
+});
