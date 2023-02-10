@@ -177,7 +177,11 @@ export default function App() {
 
   return (
     <PaperProvider theme={theme}>
-      <Appbar.Header>
+      <Appbar.Header style={[
+        {
+          backgroundColor: theme.colors.primary,
+        },
+      ]}>
         {state.currentPage !== 'home' && <Appbar.BackAction onPress={() => { backToLastPage() }} />}
         <Appbar.Content title={getLastPageTitle()} />
       </Appbar.Header>
