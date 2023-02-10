@@ -1,4 +1,6 @@
-import { TouchableOpacity, Text, Button, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, View, StyleSheet } from 'react-native';
+import { Button } from 'react-native-paper';
+
 
 export default function Home(props) {
 
@@ -18,9 +20,9 @@ export default function Home(props) {
                 </TouchableOpacity>
             )
             )}
-            <Button title="add" onPress={() => {
+            <Button icon="camera" mode="contained" onPress={() => {
                 props.addCategory()
-            }}></Button>
+            }}>Add</Button>
         </View>
     );
 }

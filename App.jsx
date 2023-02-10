@@ -6,8 +6,17 @@ import Category from './Category';
 import Note from './Note';
 import NewCategory from './NewCategory'
 import { createId } from './helper'
+import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 // import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+};
 
 const defState = {
   currentPage: 'home',
@@ -141,37 +150,39 @@ export default function App() {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {state.currentPage === 'home' && (
-        <Home
-          categories={state.categories}
-          addCategory={() => {
-            setState({
-              ...state,
-              currentPage: 'newCategory'
-            })
-          }}
-          clickOnCategory={(category) => { clickCategory(category) }}></Home>
-      )}
-      {state.currentPage === 'category' && (
-        <Category
-          category={getCurrentCategory()}
-          backClick={() => { backClick() }}
-          createNewNote={() => { newNote() }}
-          clickOnNote={(note) => { clickOnNote(note) }}></Category>
-      )}
-      {state.currentPage === 'note' && (
-        <Note
-          note={getNote()}
-          deleteNote={() => { deleteNote() }}
-          saveNote={(text) => { saveNote(text) }}></Note>
-      )}
-      {state.currentPage === 'newCategory' && (
-        <NewCategory
-          categoryName={(text) => { addCategory(text) }}></NewCategory>
-      )}
-      <StatusBar style="auto" />
-    </ScrollView>
+    <PaperProvider theme={theme}>
+      <ScrollView contentContainerStyle={styles.container}>
+        {state.currentPage === 'home' && (
+          <Home
+            categories={state.categories}
+            addCategory={() => {
+              setState({
+                ...state,
+                currentPage: 'newCategory'
+              })
+            }}
+            clickOnCategory={(category) => { clickCategory(category) }}></Home>
+        )}
+        {state.currentPage === 'category' && (
+          <Category
+            category={getCurrentCategory()}
+            backClick={() => { backClick() }}
+            createNewNote={() => { newNote() }}
+            clickOnNote={(note) => { clickOnNote(note) }}></Category>
+        )}
+        {state.currentPage === 'note' && (
+          <Note
+            note={getNote()}
+            deleteNote={() => { deleteNote() }}
+            saveNote={(text) => { saveNote(text) }}></Note>
+        )}
+        {state.currentPage === 'newCategory' && (
+          <NewCategory
+            categoryName={(text) => { addCategory(text) }}></NewCategory>
+        )}
+        <StatusBar style="auto" />
+      </ScrollView>
+    </PaperProvider>
   );
 }
 
